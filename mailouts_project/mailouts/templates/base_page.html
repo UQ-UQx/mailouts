@@ -1,0 +1,9 @@
+{% extends "base_layout.html" %}
+{% block header %}
+{% endblock %}
+{% block sublayout %}
+    <div id="content" class = 'container'>
+        <h1>{% block title %}{% endblock %}</h1>
+        {% block content %}{% endblock %}
+    </div>
+{% endblock %}

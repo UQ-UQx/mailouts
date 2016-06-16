@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <title>{% block title %}{% endblock %} - UQx Mailouts</title>
+    <!-- Javascript -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    {% block pagescripts %}{% endblock %}
+    <!-- CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/new_style.css' %}">
+    {% block pagestyles %}{% endblock %}
+</head>
+<body>
+<div id="header">
+    <a href="/" title="Home" rel="home" id="logo">
+        <img src="https://online.ceit.uq.edu.au/sites/all/themes/uqx_ceit_bartik/images/uq-logo.png" alt="Home">
+        <img src="https://online.ceit.uq.edu.au/sites/all/themes/uqx_ceit_bartik/uqx-logo.png" alt="Home">
+        <p>Mailouts</p>
+    </a>
+    {% block header %}{% endblock %}
+</div>
+{% block sublayout %}{% endblock %}
+<footer id="footer" role="contentinfo" class="clearfix">
+    <div class="region region-footer">
+        <div id="block-block-2" class="block block-block contextual-links-region">
+
+
+            <div class="content">
+                <div class="footer-column">
+                    <a href="http://www.uq.edu.au"><img alt="The University of Queensland Australia"
+                                                        src="https://online.ceit.uq.edu.au/sites/all/themes/uqx_ceit_bartik/images/uq-logo.png"/></a>
+                </div>
+
+                <div class="footer-column">
+                    <p>The University of Queensland<br/>
+                        Brisbane St Lucia, QLD 4072</p>
+
+                    <p>© The University of Queensland</p>
+                </div>
+
+                <div class="footer-column">
+                    <p>ABN 63 942 912 684<br/>
+                        CRICOS Provider No:00025B</p>
+
+                    <p>Authorised by: Director of CEIT<br/>
+                        Maintained by: <a href="mailto:online@ceit.uq.edu.au">online@ceit.uq.edu.au</a></p>
+                </div>
+
+                <div class="footer-column">
+                    <p>HELP AND SUPPORT<br/>
+                        Contact <a href="mailto:online@ceit.uq.edu.au">online@ceit.uq.edu.au</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

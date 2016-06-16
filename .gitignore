@@ -59,6 +59,9 @@ docs/_build/
 # PyBuilder
 target/
 
+# data files
+mailouts_project/mailouts/data/
+
 # OS generated files #
 ######################
 .DS_Store

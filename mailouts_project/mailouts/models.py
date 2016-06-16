@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-class Subscritptions(models.Model):
+class Subscriptions(models.Model):
     email = models.CharField(max_length=1000, blank=False)
     opt_in = models.BooleanField(blank=False)
     opt_in_source = models.CharField(max_length=1000, blank=False)
@@ -13,5 +13,5 @@ class Subscritptions(models.Model):
     full_name = models.CharField(max_length=1000, blank=False)
 
 class StudentinCourse(models.Model):
-    subscription = models.ForeignKey(Subscritptions)
+    subscription = models.ForeignKey(Subscriptions)
     course_id = models.CharField(max_length=1000, blank=False)

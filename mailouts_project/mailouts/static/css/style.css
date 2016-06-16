@@ -1,0 +1,39 @@
+svg text.unilabel {
+    font-family: Istok Web;
+    fill:#333;
+    stroke-width:0.1;
+    stroke:#333;
+    font-size:80%;
+}
+svg text.fineprint {
+    font-size:10px;
+    fill:#333;
+}
+div.visualization_wrapper {
+    padding:0 20px;
+}
+div.visualisation_box {
+    text-align:center;
+    padding:15px;
+}
+div.visualisation_box a {
+    border:1px solid #ccc;
+    display:block;
+    height:160px;
+    background:#eee;
+}
+div.visualisation_box a:hover {
+    text-decoration:none;
+    background:#BAA3C1;
+    color:#fff;
+    border-color:#480B5B;
+}
+div.visualisation_box a:hover img {
+    border:1px solid #480B5B;
+}
+div.visualisation_box a img {
+    width:180px;
+    height:100px;
+    background-color:#fff;
+    border:1px solid #ccc;
+}
