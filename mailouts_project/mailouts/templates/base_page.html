@@ -3,7 +3,7 @@
 {% endblock %}
 {% block sublayout %}
     <div id="content" class = 'container'>
-        <h1>{% block title %}{% endblock %}</h1>
-        {% block content %}{% endblock %}
+        <h1>{% block title %}{{title}}{% endblock %}</h1>
+        {% block content %}{{content}}{% endblock %}
     </div>
 {% endblock %}

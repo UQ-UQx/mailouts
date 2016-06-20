@@ -2,12 +2,17 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 
-from datetime import datetime
+#from datetime import datetime
+from django.utils import timezone
 from django.utils.dateparse import parse_datetime
 import csv
 import os
+import hashlib
 
 from .models import Subscriptions, StudentinCourse
+
+# 
+UNSUBSCRIBE_SECRET = 'secret unsubscribe'
 
 def index(request):
 	template = loader.get_template('index.html')
@@ -17,6 +22,63 @@ def index(request):
 	response = HttpResponse(template.render(contextvars, request))
 	response['P3P'] = 'CP="We do not have a P3P policy."'
 	return response
+
+def unsubscribe(request):
+	template = loader.get_template('unsubscribe.html')
+	contextvars = {}
+
+	print 'unsubscribed'
+	# TODO: change email_opt_out to the user who received the email
+	email_opt_out = 'uqx.courses@gmail.com'
+
+	base_url = request.get_host()
+
+	contextvars['link'] = base_url + '/' + make_unsubscribe_link(email_opt_out)
+	print contextvars['link']
+
+	response = HttpResponse(template.render(contextvars, request))
+	response['P3P'] = 'CP="We do not have a P3P policy."'
+	return response
+
+def make_unsubscribe_link(email_opt_out):
+	email_opt_out = email_opt_out.lower()
+
+	m = hashlib.md5()
+	m.update(UNSUBSCRIBE_SECRET)
+	validation_hash = m.hexdigest()
+
+	link = 'mailouts/unsubscribe/' + email_opt_out + '/' + validation_hash + '/'
+	return link
+
+def updateoptout_db(request, email, validation_hash):
+	#print 'undating...'
+	#print email
+	#print validation_hash
+
+	template = loader.get_template('base_page.html')
+	contextvars = {}
+
+	contextvars['title'] = 'Unsubscribe result'
+
+	m = hashlib.md5()
+	m.update(UNSUBSCRIBE_SECRET)
+	expected = m.hexdigest()
+
+	if expected != validation_hash:
+		contextvars['content'] = 'Invalid un-subscribe link used.'
+	else:
+		opt_in = False
+		opt_in_source = 'unsubscribe_link'
+		preference_set_datetime = timezone.now()
+		Subscriptions.objects.filter(email=email).update(opt_in=opt_in, opt_in_source=opt_in_source, preference_set_datetime=preference_set_datetime)
+		contextvars['content'] = 'Unsubscription from UQx Mailing List Successful.'
+
+	response = HttpResponse(template.render(contextvars, request))
+	response['P3P'] = 'CP="We do not have a P3P policy."'
+	return response
+
+
+
 
 def import_csv(request):
 
