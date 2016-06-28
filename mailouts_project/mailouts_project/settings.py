@@ -153,6 +153,9 @@ BROKER_PASSWORD = "guest"
 # Celery project using the same RabbitMQ instance
 BROKER_VHOST = "/"
 
+CELERY_DISABLE_RATE_LIMITS = False
+# Rate limit to three outgoing SES emails a second.
+CUCUMBER_RATE_LIMIT = 4
 
 try:
     from local_settings import *
