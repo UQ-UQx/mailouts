@@ -8,11 +8,32 @@ from django.utils.dateparse import parse_datetime
 import csv
 import os
 import hashlib
+from django.conf import settings
 
-from .models import Subscriptions, StudentinCourse
+from .models import Subscriptions, StudentinCourse, Newsletters, NewsletterRecipients
 
 def index(request):
 	return render(request, 'index.html', {})
+
+def newsletter(request):
+	#get distinct list of courses
+	course_list = list(set(StudentinCourse.objects.values_list('course_id', flat=True)))
+
+	page_title = "Newsletter"
+	email_body = ""
+	subject = ""
+	numberofrecipients = 0
+
+	contextvars = {'course_list': course_list, 'page_title': page_title, 'email_body': email_body, 'subject': subject, 'numberofrecipients': numberofrecipients}
+
+	return render(request, 'newsletter.html', contextvars)
+
+def newsletterpreview(request):
+
+	email_body = ''
+	contextvars = {'email_body': email_body}
+
+	return render(request, 'newsletterpreview.html', contextvars)
 
 def unsubscribe(request):
 	contextvars = {}
@@ -49,12 +70,8 @@ def updateoptout_db(request, email, validation_hash):
 
 	return render(request, 'base_page.html', contextvars)
 
-
 def get_md5_unsubsecret():
-	if "UNSUBSCRIBE_SECRET" in os.environ:
-		unsubsecret = os.environ['UNSUBSCRIBE_SECRET']
-	else:
-		unsubsecret = 'secret unsubscribe'
+	unsubsecret = settings.UNSUBSCRIBE_SECRET
 
 	m = hashlib.md5()
 	m.update(unsubsecret)
@@ -70,7 +87,7 @@ def import_csv(request):
 	csv2db(filename)
 
 	return render(request, 'import_csv.html', contextvars)
-	
+
 def csv2db(filename):
 	with open(filename, 'rU') as csvfile:
 		filereader = csv.reader(csvfile)
@@ -82,7 +99,7 @@ def csv2db(filename):
 			full_name = row[1]
 			course_id = row[2]
 			opt_in = row[3]
-			opt_in_source = 'edxlog'			
+			opt_in_source = 'edxlog'
 			preference_set_datetime = format_datetime(row[4])
 
 			if preference_set_datetime:
@@ -107,7 +124,6 @@ def csv2db(filename):
 			else:
 				print 'email: ' + email + ' preference_set_datetime: ' + row[4] + ' BAD. Not processed to this record.'
 
-
 def format_datetime(date_time):
 	#print date_time
 	if len(date_time) == 19:
@@ -120,5 +136,3 @@ def format_datetime(date_time):
 
 	datetime_object = parse_datetime(date_time)
 	return datetime_object
-
-	

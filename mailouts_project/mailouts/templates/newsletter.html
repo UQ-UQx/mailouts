@@ -1,0 +1,38 @@
+{% extends "base_page.html" %}
+
+{% block title %}{{page_title}}{% endblock %}
+
+
+{% block content %}
+<h2>Create Newsletter</h2>
+<form method="POST" target="_blank" action='newsletter'>
+  <a href='javascript:toggle();' class='btn btn-info' style='float:right;'>Toggle all courses</a>
+  <h3>Courses</h3>
+  <div class='courses container'>
+{% for course in course_list %}
+  <div class="checkbox col-md-3">
+    <label>
+      <input name='courses[]' type="checkbox" value="{{course}}" checked="checked">
+        {course}
+    </label>
+  </div>
+{% endfor %}
+</br>
+Subject: <input type="text" id="subject" name="subject" value="{{subject}}" />
+</br>
+Email Body <textarea id='email_body' name="email_body" rows="15" cols="80">{{email_body}}</textarea>
+<input type="submit" name="save_btn" id="save_btn" value="Save" />
+</form>
+  <script type='text/javascript'>
+  	var selected = true;
+  	function toggle() {
+  		if(selected) {
+  			$('.courses input:checkbox').prop( "checked", false );
+  			selected = false;
+  		} else {
+  			$('.courses input:checkbox').prop( "checked", true );
+  			selected = true;
+  		}
+  	}
+  </script>
+{% endblock %}
