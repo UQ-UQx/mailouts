@@ -20,13 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '&-41(xhjqj^lxj5sow)30&3d8fnusnp%)#sqy^ib4m_1kyzbd&'
+SECRET_KEY = 'Enter Secret Key Here!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -37,8 +36,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mailouts'
+    'mailouts',
+    'mailer',
+    'djcelery',
+    'seacucumber'
 ]
+
+#'propaganda'
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -121,7 +125,34 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
+# Mailouts specific settings
 UNSUBSCRIBE_SECRET = 'Enter Secret for Unsubscribe link Hash'
+
+# Route email through Amazon SES via Celery
+EMAIL_BACKEND = 'seacucumber.backend.SESBackend'
+MAILER_EMAIL_BACKEND = 'seacucumber.backend.SESBackend'
+
+# Log in to Amazon SES and get these
+AWS_ACCESS_KEY_ID = 'your_key_id'  # Amazon Simple Email Services key ID
+AWS_SECRET_ACCESS_KEY = 'your_access_key'  # Amazon Simple Email Services access key
+
+# Must be an email authorized on Amazon SES
+DEFAULT_FROM_EMAIL = 'youremail@example.com'
+
+# Celery loader
+import djcelery
+djcelery.setup_loader()
+
+# Default broker settings, change it if you need to
+BROKER_HOST = "localhost"
+BROKER_PORT = 5672
+BROKER_USER = "guest"
+BROKER_PASSWORD = "guest"
+# Make sure this is unique on production systems with more than one
+# Celery project using the same RabbitMQ instance
+BROKER_VHOST = "/"
+
 
 try:
     from local_settings import *
