@@ -15,3 +15,17 @@ class Subscriptions(models.Model):
 class StudentinCourse(models.Model):
     subscription = models.ForeignKey(Subscriptions)
     course_id = models.CharField(max_length=1000, blank=False)
+
+class Newsletters(models.Model):
+    subject = models.CharField(max_length=1000, blank=False)
+    email_body = models.TextField(blank=False)
+    send_criteria = models.TextField(blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+class NewsletterRecipients(models.Model):
+    subscription_id = models.ForeignKey(Subscriptions)
+    newsletter_id = models.ForeignKey(Newsletters)
+    sent_flag = models.BooleanField(blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
