@@ -19,7 +19,8 @@ class StudentinCourse(models.Model):
 class Newsletters(models.Model):
     subject = models.CharField(max_length=1000, blank=False)
     email_body = models.TextField(blank=False)
-    send_criteria = models.TextField(blank=False)
+    course_criteria = models.TextField(blank=False)
+    demographic_criteria = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
