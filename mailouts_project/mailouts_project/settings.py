@@ -37,12 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mailouts',
-    'mailer',
     'djcelery',
     'seacucumber'
 ]
 
-#'propaganda'
+#'propaganda', 'mailer',
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
