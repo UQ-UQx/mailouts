@@ -1,19 +1,22 @@
 from email.utils import COMMASPACE
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from boto.ses import SESConnection
+#from boto.ses import SESConnection
 from django.conf import settings
 from django.template import Template, Context
+import boto.ses
 
 def render(template_string, context_dict):
     t = Template(template_string)
-    c = Context({context_dict)
+    c = Context(context_dict)
     return t.render(c)
 
 class SESMessage(object):
 
     def __init__(self, source, to_addresses, subject, body_html, body_text, context_dict, **kw):
-        self.ses = SESConnection(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
+        #self.ses = SESConnection.connect_to_region('us-west-2', settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
+
+        self.ses = boto.ses.connect_to_region('us-west-2',aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
 
         self._source = source
         self._to_addresses = to_addresses
@@ -23,7 +26,7 @@ class SESMessage(object):
         self.subject = subject
         self.text = body_html
         self.html = body_text
-        self.context_dict
+        self.context_dict = context_dict
         self.attachments = []
 
     def send(self):
@@ -48,8 +51,8 @@ class SESMessage(object):
                 else:
                     message['To'] = self._to_addresses
 
-                message.attach(MIMEText(self.text, 'plain'))
-                message.attach(MIMEText(self.html, 'html'))
+                message.attach(MIMEText(render(self.text, self.context_dict), 'plain'))
+                message.attach(MIMEText(render(self.html, self.context_dict), 'html'))
             else:
                 raise NotImplementedError, 'Attachments are not currently supported.'
 

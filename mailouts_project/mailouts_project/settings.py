@@ -38,10 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mailouts',
     'djcelery',
-    'seacucumber'
 ]
 
-#'propaganda', 'mailer',
+#'propaganda', 'mailer','seacucumber'
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -81,10 +80,11 @@ WSGI_APPLICATION = 'mailouts_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(os.path.dirname(__file__), 'db.sqlite3'),
     }
 }
-
+#http://stackoverflow.com/questions/26243237/configure-celery-with-django-getting-some-errors
+# old path os.path.join(BASE_DIR, 'db.sqlite3'),
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -155,6 +155,10 @@ BROKER_VHOST = "/"
 CELERY_DISABLE_RATE_LIMITS = False
 # Rate limit to three outgoing SES emails a second.
 CUCUMBER_RATE_LIMIT = 4
+
+CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'
+BROKER_URL = 'django://'
+INSTALLED_APPS += ('kombu.transport.django', )
 
 try:
     from local_settings import *
