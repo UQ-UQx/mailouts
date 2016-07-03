@@ -61,14 +61,6 @@ def unsubscribe(request):
 
 	return render(request, 'unsubscribe.html', contextvars)
 
-def make_unsubscribe_link(email_opt_out):
-	email_opt_out = email_opt_out.lower()
-
-	validation_hash = get_md5_unsubsecret()
-
-	link = 'mailouts/unsubscribe/' + email_opt_out + '/' + validation_hash + '/'
-	return link
-
 def updateoptout_db(request, email, validation_hash):
 	contextvars = {}
 	contextvars['title'] = 'Unsubscribe result'
@@ -85,13 +77,6 @@ def updateoptout_db(request, email, validation_hash):
 		contextvars['content'] = 'Unsubscription from UQx Mailing List Successful.'
 
 	return render(request, 'base_page.html', contextvars)
-
-def get_md5_unsubsecret():
-	unsubsecret = settings.UNSUBSCRIBE_SECRET
-
-	m = hashlib.md5()
-	m.update(unsubsecret)
-	return m.hexdigest()
 
 def import_csv(request):
 	contextvars = {}

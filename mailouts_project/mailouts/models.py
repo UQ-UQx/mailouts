@@ -17,6 +17,7 @@ class StudentinCourse(models.Model):
     course_id = models.CharField(max_length=1000, blank=False)
 
 class Newsletters(models.Model):
+    sender_email = models.CharField(max_length=1000, blank=False)
     subject = models.CharField(max_length=1000, blank=False)
     email_body = models.TextField(blank=False)
     course_criteria = models.TextField(blank=False)
