@@ -60,7 +60,7 @@ class SESMessage(object):
                 destinations=self._to_addresses)
 
     def preview(self, type):
-        if type==text:
+        if type=='text':
             return render(self.text, self.context_dict)
         else:
             return render(self.html, self.context_dict)

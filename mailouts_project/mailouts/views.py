@@ -10,6 +10,7 @@ import os
 import hashlib
 from django.conf import settings
 from amazonses import SESMessage
+from emailutils import *
 
 from .models import Subscriptions, StudentinCourse, Newsletters, NewsletterRecipients
 
@@ -24,6 +25,10 @@ def newsletter(request):
 	email_body = ""
 	subject = ""
 	numberofrecipients = 0
+
+	#print make_unsubscribe_link('aneesha.bakharia@gmail.com')
+	setup_recipients(1)
+	sendout_newsletter(1)
 
 	contextvars = {'course_list': course_list, 'page_title': page_title, 'email_body': email_body, 'subject': subject, 'numberofrecipients': numberofrecipients}
 
@@ -65,7 +70,7 @@ def updateoptout_db(request, email, validation_hash):
 	contextvars = {}
 	contextvars['title'] = 'Unsubscribe result'
 
-	expected = get_md5_unsubsecret()
+	expected = get_md5_unsubsecret(email)
 
 	if expected != validation_hash:
 		contextvars['content'] = 'Invalid un-subscribe link used.'
