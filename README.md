@@ -44,9 +44,9 @@ $ pip install -r requirements.txt
 
 **Install UQx Mailouts**
 
-Edit clatoolkit_project/settings.py
+Edit mailouts/settings.py
 Enter secret key
-Enter database port and name in settings.py
+Create a database (both MySQL and Postgres are supported). Enter database port and name in settings.py
 
 If a new database was created, you will need to setup the database tables and create a superuser.
 ```bash
@@ -60,5 +60,6 @@ $ python manage.py runserver
 ```
 
 **Sending an Email Newsletter**
-If a new database was created go to http://localhost:8000/admin and login with superuser account
-Add a newsletter. You will need an Amazon SES verified from email address. Both HTML and Plaintext emails are supported. The list of
+If a new database was created go to http://localhost:8000/admin and login with superuser account. The Django admin interface is used to add Newsletters.
+
+- Add a newsletter. You will need an Amazon SES verified from email address. Both HTML and Plaintext emails are supported. A comma separated list of courses (i.e., the edX course id) must be specified. A student will only be included as an email recipient once even if they are enrolled in multiple courses.
