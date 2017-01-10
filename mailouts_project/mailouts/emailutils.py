@@ -56,7 +56,6 @@ def sendout_newsletter(newsletter_id):
 	count = 0
 	for recipient in newsletterrecipients:
 		email = recipient.subscription_id.email
-		print email
 		#name = recipient.subscription_id.name
 		unsubscribe_link = make_unsubscribe_link(email)
 		contextvars = {'unsubscribe_link':unsubscribe_link}
@@ -73,11 +72,11 @@ def make_unsubscribe_link(email_opt_out):
 
 	validation_hash = get_md5_unsubsecret(email_opt_out)
 
-	link = 'https://tools.ceit.uq.edu.au/uqxmailouts/unsubscribe/index.php?email=' + email_opt_out + '&validation_hash=' + validation_hash
+	link = settings.UNSUBSCRIBE_SERVER_URL + '/unsubscribe/index.php?email=' + email_opt_out + '&validation_hash=' + validation_hash
 	return link
 
 def get_md5_unsubsecret(email_opt_out):
-	print settings.UNSUBSCRIBE_SECRET
+
 	unsubsecret = settings.UNSUBSCRIBE_SECRET
 
 	m = hashlib.md5()

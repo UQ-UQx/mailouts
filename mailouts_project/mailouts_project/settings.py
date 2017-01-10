@@ -142,6 +142,9 @@ DEFAULT_FROM_EMAIL = 'youremail@example.com'
 # Unsubscribe server URL
 UNSUBSCRIBE_SERVER_URL = 'https://www.youserver.com'
 
+# Opt in csv file from edX
+OPT_IN_CSVFILE = "/path/to/uqx-email_opt_in-prod-analytics.csv"
+
 # Celery loader
 import djcelery
 djcelery.setup_loader()

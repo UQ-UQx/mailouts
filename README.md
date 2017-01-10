@@ -63,3 +63,6 @@ $ python manage.py runserver
 If a new database was created go to http://localhost:8000/admin and login with superuser account. The Django admin interface is used to add Newsletters.
 
 - Add a newsletter. You will need an Amazon SES verified from email address. Both HTML and Plaintext emails are supported. A comma separated list of courses (i.e., the edX course id) must be specified. A student will only be included as an email recipient once even if they are enrolled in multiple courses.
+http://www.campaignmonitor.com has a ui that can be used to create html email templates that are responsive and display in multiple clients. 
+- Generate a list of newsletter recipients
+- Send emails

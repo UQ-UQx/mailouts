@@ -87,7 +87,7 @@ def import_csv(request):
 	contextvars = {}
 
 	dirname = os.path.dirname(os.path.abspath(__file__))
-	filename = os.path.join(dirname, 'data', 'uqx-email_opt_in-prod-analytics.csv')
+	filename = os.path.join(dirname, 'data', settings.OPT_IN_CSVFILE)
 
 	# Update the DB based on the csv file
 	csv2db(filename)
