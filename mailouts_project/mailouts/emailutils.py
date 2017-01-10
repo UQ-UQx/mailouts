@@ -38,27 +38,24 @@ def setup_recipients(newsletter_id):
 def sendout_newsletter(newsletter_id):
     print 'sendout_newsletter'
     # get all recipients
-    newsletter = Newsletter.objects.get(pk=newsletter_id)
-    subject = newsletter.subject
-    body = newsletter.email_body
-    body_txt = newsletter.email_text
-    sender = newsletter.sender_email
+	newsletter = Newsletter.objects.get(pk=newsletter_id)
+	subject = newsletter.subject
+	body = newsletter.email_body
+	body_txt = newsletter.email_text
+	sender = newsletter.sender_email
 
-    newsletterrecipients = NewsletterRecipient.objects.filter(newsletter=newsletter, sent_flag=False)[:40000]
-    print 'sendto:', len(newsletterrecipients)
-    count = 0
-    for recipient in newsletterrecipients:
-        email = recipient.subscription.email
-        name = recipient.subscription.full_name
-        unsubscribe_link = make_unsubscribe_link(email)
-        contextvars = {'unsubscribe_link':unsubscribe_link, 'name':name}
-        sendsesemail(email, subject, body, body_txt, contextvars, sender)
-        recipient.sent_flag = True
-        recipient.save()
-        count = count + 1
-        if (count == 100):
-            print count
-            count = 0
+	newsletterrecipients = NewsletterRecipient.objects.filter(newsletter=newsletter, sent_flag=False)
+	count = 0
+	for recipient in newsletterrecipients:
+		email = recipient.subscription.email
+		recipient_id = recipient.id
+		unsubscribe_link = make_unsubscribe_link(email)
+		contextvars = {'unsubscribe_link':unsubscribe_link}
+		sendsesemail.delay(email, subject, body, body_txt, contextvars, sender, recipient_id)
+		count = count + 1
+		if (count == 100):
+			print count
+			count = 0
 
 def make_unsubscribe_link(email_opt_out):
 	email_opt_out = email_opt_out.lower()
