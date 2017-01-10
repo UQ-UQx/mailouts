@@ -42,11 +42,13 @@ $ pip install -r requirements.txt
 
 **Install UQx Mailouts**
 
-Edit mailouts/settings.py
-Enter a secret key
-Create a database (both MySQL and Postgres are supported). Enter database port and name in settings.py
-Enter the filename and path to the OPT_IN_CSVFILE from edX.
-Enter the url for the server that has the unsubscribe link in UNSUBSCRIBE_SERVER_URL.
+- Create a database (both MySQL and Postgres are supported).
+- Edit mailouts/settings.py
+- Enter a secret key for Django
+- Enter database port and name in settings.py
+- Enter the filename and path to the OPT_IN_CSVFILE from edX.
+- Enter the url for the server that has the unsubscribe link in UNSUBSCRIBE_SERVER_URL.
+- Enter the Amazon SES access key and secret key
 
 If a new database was created, you will need to setup the database tables and create a superuser.
 ```bash
