@@ -14,8 +14,29 @@ from emailutils import *
 
 from .models import Subscription, StudentinCourse, Newsletter, NewsletterRecipient
 
-def index(request):
-	return render(request, 'index.html', {})
+def setuprecipients(request):
+
+	newsletter_id = request.GET.get('newsletter_id')
+
+	setup_recipients(newsletter_id)
+
+	message =  "The recipients have been setup for Newsletter " + newsletter_id
+
+	contextvars = {'message': message, 'page_title': "Setup Newsletter Recipients"}
+
+	return render(request, 'setuprecipients.html', contextvars)
+
+#todo: make an admin task and trigger as an async celery task
+def sendnewsletters(request):
+	newsletter_id = request.GET.get('newsletter_id')
+
+	sendout_newsletter(newsletter_id)
+
+	message = "The email newsletter have been sent out. (id=" + newsletter_id + ")"
+
+	contextvars = {'message': message, 'page_title': "Send Email Newsletter"}
+
+	return render(request, 'sendnewsletters.html', contextvars)
 
 def newsletter(request):
 	#get distinct list of courses
@@ -87,7 +108,7 @@ def import_csv(request):
 	contextvars = {}
 
 	dirname = os.path.dirname(os.path.abspath(__file__))
-	filename = os.path.join(dirname, 'data', settings.OPT_IN_CSVFILE)
+	filename = settings.OPT_IN_CSVFILE
 
 	# Update the DB based on the csv file
 	csv2db(filename)
@@ -109,7 +130,7 @@ def csv2db(filename):
 			preference_set_datetime = format_datetime(row[4])
 
 			if preference_set_datetime:
-				subscription, subscription_created = Subscriptions.objects.get_or_create(
+				subscription, subscription_created = Subscription.objects.get_or_create(
 					email = email,
 					defaults = {'opt_in': opt_in, 'opt_in_source': opt_in_source, 'preference_set_datetime': preference_set_datetime, 'full_name': full_name}
 				)

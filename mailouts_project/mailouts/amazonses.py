@@ -24,8 +24,8 @@ class SESMessage(object):
         self._bcc_addresses = None
 
         self.subject = subject
-        self.text = body_html
-        self.html = body_text
+        self.text = body_text
+        self.html = body_html
         self.context_dict = context_dict
         self.attachments = []
 

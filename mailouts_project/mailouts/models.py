@@ -20,6 +20,7 @@ class Newsletter(models.Model):
     sender_email = models.CharField(max_length=1000, blank=False)
     subject = models.CharField(max_length=1000, blank=False)
     email_body = models.TextField(blank=False)
+    email_text = models.TextField(blank=True)
     course_criteria = models.TextField(blank=False)
     demographic_criteria = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
