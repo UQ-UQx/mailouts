@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-class Subscriptions(models.Model):
+class Subscription(models.Model):
     email = models.CharField(max_length=1000, blank=False)
     opt_in = models.BooleanField(blank=False)
     opt_in_source = models.CharField(max_length=1000, blank=False)
@@ -13,10 +13,10 @@ class Subscriptions(models.Model):
     full_name = models.CharField(max_length=1000, blank=False)
 
 class StudentinCourse(models.Model):
-    subscription = models.ForeignKey(Subscriptions)
+    subscription = models.ForeignKey(Subscription)
     course_id = models.CharField(max_length=1000, blank=False)
 
-class Newsletters(models.Model):
+class Newsletter(models.Model):
     sender_email = models.CharField(max_length=1000, blank=False)
     subject = models.CharField(max_length=1000, blank=False)
     email_body = models.TextField(blank=False)
@@ -25,9 +25,9 @@ class Newsletters(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-class NewsletterRecipients(models.Model):
-    subscription_id = models.ForeignKey(Subscriptions)
-    newsletter_id = models.ForeignKey(Newsletters)
+class NewsletterRecipient(models.Model):
+    subscription = models.ForeignKey(Subscription)
+    newsletter = models.ForeignKey(Newsletter)
     sent_flag = models.BooleanField(blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

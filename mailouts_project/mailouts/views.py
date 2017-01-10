@@ -12,7 +12,7 @@ from django.conf import settings
 from amazonses import SESMessage
 from emailutils import *
 
-from .models import Subscriptions, StudentinCourse, Newsletters, NewsletterRecipients
+from .models import Subscription, StudentinCourse, Newsletter, NewsletterRecipient
 
 def index(request):
 	return render(request, 'index.html', {})

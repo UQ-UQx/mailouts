@@ -139,6 +139,9 @@ AWS_SECRET_ACCESS_KEY = 'your_access_key'  # Amazon Simple Email Services access
 # Must be an email authorized on Amazon SES
 DEFAULT_FROM_EMAIL = 'youremail@example.com'
 
+# Unsubscribe server URL
+UNSUBSCRIBE_SERVER_URL = 'https://www.youserver.com'
+
 # Celery loader
 import djcelery
 djcelery.setup_loader()
